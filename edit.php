@@ -14,6 +14,9 @@ if (isset($_POST['update']))
     $progress = $_POST['progress'];
     $notes = $_POST['notes'];
 
+    if ($progress > 100) $progress = 100;
+
+
     // build the SQL update query
     $sql = "UPDATE students SET name='$name', email='$email', course='$course', progress='$progress', notes='$notes' WHERE id=$id";
 

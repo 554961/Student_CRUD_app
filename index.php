@@ -13,6 +13,8 @@ if (isset($_POST['add']))
     $progress = $_POST['progress'];
     $notes = $_POST['notes'];
 
+    if ($progress > 100) $progress = 100;
+
     //build a simple SQL INSERT query 
     $sql = "INSERT INTO students (name, email, course, progress, notes) VALUES ('$name', '$email', '$course', '$progress', '$notes')";
     //run query
