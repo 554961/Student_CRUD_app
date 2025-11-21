@@ -2,6 +2,36 @@
 // index.php
 // include the database connection file so we can use $conn
 include 'db.php';
+// 
+// 
+// Login system doesnt work currently.
+// 
+// 
+// $GLOBALS["loginFailed"] = false;
+// //
+// // !!! Make login form to login to admin and change loggedIn to TRUE
+// //
+// if (isset($_POST['login']))
+// {
+//     // get admin login values
+//     $username = $_POST['username'];
+//     $password = $_POST['password'];
+
+//     //query
+//     $sql = "SELECT username, password FROM login WHERE username='$username'";
+
+//     // execute
+//     $loginData = mysqli_query($conn, $sql);
+//     while ($row = mysqli_fetch_assoc($loginData))
+//     {
+//         if ($username == $row['username'] && $row['password'] == $password)
+//         {
+//             $GLOBALS["loginFailed"] = true;            
+//         }
+//     }
+// }
+
+
 
 // if the form was submitted with the "add" button
 if (isset($_POST['add']))
@@ -13,14 +43,25 @@ if (isset($_POST['add']))
     $progress = $_POST['progress'];
     $notes = $_POST['notes'];
 
-    if ($progress > 100) $progress = 100;
+    if ($progress > 100 || $progress < 0) 
+    {
+        $progress = 100;
+        echo "<script> alert('Invalid progress input.') </script>";
+        header("location: index.php");
+    }
+
 
     //build a simple SQL INSERT query 
     $sql = "INSERT INTO students (name, email, course, progress, notes) VALUES ('$name', '$email', '$course', '$progress', '$notes')";
     //run query
     mysqli_query($conn, $sql);
+
+    //Unset vars
+    unset($_POST['name'], $_POST['email'], $_POST['course'], $_POST['progress'], $_POST['notes']);
+    unset($name,$email,$course,$progress,$notes);
+
 }
-// Get all students from the database to displyay in the table
+// Get all students from the database to display in the table
 $sql = "SELECT * FROM students";
 $result = mysqli_query($conn, $sql);
 ?>
@@ -32,83 +73,118 @@ $result = mysqli_query($conn, $sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <title>View/Add Students</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        .roboto-slab-font {
+            font-family: "Roboto Slab", serif;
+            font-optical-sizing: auto;
+            font-weight: 700;
+            font-style: normal;
+        }
+    </style>
 </head>
-<body>
-    <h1 class="text alert-info">Student List - Crud</h1>
+    <body class="roboto-slab-font">
+        <h1 class="text alert-info">Student List </h1>
 
-    <!-- form to add new student-->
-    <h2>Add student</h2>
-    <form method="POST" action="index.php">
-        <div class="form-control">
-            <label>Name:</label>
-            <input type="text" name="name" required>
-        </div>
-        <br><br>
-        <div class="form-control">
-            <label>Email:</label>
-            <input type="email" name="email" required>
-        </div>
-        <br><br>
-        <div class="form-control">
-            <label>Course:</label>
-            <input type="text" name="course" required>
-        </div>
-        <br><br>
-        <div class="form-control">
-            <label>Progress:</label>
-            <input type="text" name="progress" required>
-        </div>
-        <br><br>
-        <div class="form-control">
-            <label>Notes:</label>
-            <input type="text" name="notes" required>
-        </div>
-        <br><br>
-        <button type="submit" name="add">Add student</button>
-    </form>
+        <!-- Login First -->
+         <?php// if($GLOBALS["loginFailed"] == false) { ?>
 
-    <hr>
+                <!-- LOGIN FORM -->
+                 <!-- <h2>Login Here:</h2>
+                <form action="index.php" method="POST">
+                    <div class="form-group">
+                        <label>Username: </label>
+                        <input type="text" name="username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password: </label>
+                        <input type="password" name="password">
+                    </div>
+                    <button type="submit" name="login">Login</button>
+                </form> -->
+                
+            <?php// } elseif($GLOBALS["loginFailed"] == true) { ?>
 
-    <!-- Table showing all students pulled from db -->
-    <h2>All students</h2>
-    <table border="1" cellpadding="8" cellspacing="0">
-        <tr>
-            <th>ID</th>
+        <!-- form to add new student-->
+        <h2>Add student</h2>
+        <form method="POST" action="index.php">
+            <div class="form-control">
+                <label>Name:</label>
+                <input type="text" name="name" required>
+            </div>
+            <br><br>
+            <div class="form-control">
+                <label>Email:</label>
+                <input type="email" name="email" required>
+            </div>
+            <br><br>
+            <div class="form-control">
+                <label>Course:</label>
+                <input type="text" name="course" required>
+            </div>
+            <br><br>
+            <div class="form-control">
+                <label>Progress:</label>
+                <input type="text" name="progress" required>
+            </div>
+            <br><br>
+            <div class="form-control">
+                <label>Notes:</label>
+                <input type="text" name="notes" required>
+            </div>
+            <br><br>
+            <button type="submit" name="add">Add student</button>
+        </form>
+
+        <hr>
+
+        <!-- Table showing all students pulled from db -->
+        <h2 style="bg bg-primary">All students</h2>
+        <div class="contiainer mt-4">
+            <table border="1" cellpadding="8" cellspacing="0" class="table table-bordered table-striped">
+                <tr>
+                    <th >ID</th>
+                    
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                    <th>Progress</th>
+                    <th>Notes</th>
+
+                    <th>Actions</th> 
+                </tr>
+
+                <?php
+                // loop through all rows returned
+                while ($row = mysqli_fetch_assoc($result)) { ?>
+                <tr style="background-color:<?php if ($row['progress'] < 40) echo 'red';
+                                                elseif ($row['progress'] > 40 && $row['progress'] < 69) echo 'yellow';
+                                                else echo 'aquamarine'; ?>">
+                    <!-- show student id -->
+                    <td><?php echo $row['id']; ?></td>
+
+                    <!-- use htmlspecialchars to avoid html issues -->
+                    <td><?php echo htmlspecialchars($row['name']); ?></td>
+                    <td><?php echo htmlspecialchars($row['email']); ?></td>
+                    <td><?php echo htmlspecialchars($row['course']); ?></td>
+                    <td><?php echo htmlspecialchars($row['progress']); ?></td>
+                    <td><?php echo htmlspecialchars($row['notes']); ?></td>
+
+                    <!-- links pass the student id in the URL e.g. edit.php?id=3 -->
+                    <td>
+                        <a href="edit.php?id=<?php echo $row['id']; ?>">Edit</a>
+                        <a href="delete.php?id=<?php echo $row['id']; ?>">Delete</a>
+                    </td>            
+                </tr>
+                
+                <?php } ?>
             
-            <th>Name</th>
-            <th>Email</th>
-            <th>Course</th>
-            <th>Progress</th>
-            <th>Notes</th>
-
-            <th>Actions</th> 
-        </tr>
-
-        <?php
-        // loop through all rows returned
-        while ($row = mysqli_fetch_assoc($result)) { ?>
-        <tr style="background-color:<?php if ($row['progress'] < 40) echo 'red';
-                                          elseif ($row['progress'] > 40 && $row['progress'] < 69) echo 'yellow';
-                                          else echo 'green'; ?>">
-            <!-- show student id -->
-            <td><?php echo $row['id']; ?></td>
-
-            <!-- use htmlspecialchars to avoid html issues -->
-             <td><?php echo htmlspecialchars($row['name']); ?></td>
-             <td><?php echo htmlspecialchars($row['email']); ?></td>
-             <td><?php echo htmlspecialchars($row['course']); ?></td>
-             <td><?php echo htmlspecialchars($row['progress']); ?></td>
-             <td><?php echo htmlspecialchars($row['notes']); ?></td>
-
-             <!-- links pass the student id in the URL e.g. edit.php?id=3 -->
-              <td>
-                <a href="edit.php?id=<?php echo $row['id']; ?>">Edit</a>
-                <a href="delete.php?id=<?php echo $row['id']; ?>">Delete</a>
-              </td>            
-        </tr>
-        
-        <?php } ?>
-    
-    </table>
-</body>
+            </table>
+        </div>
+        <!-- this php below is for the failed login system -->
+        <?php // } ?>
+    </body>
 </html>
