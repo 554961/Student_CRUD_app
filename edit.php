@@ -8,7 +8,7 @@ if (isset($_POST['update']))
 {
     // get new values
     $name = $_POST['name'];
-    $email = $POST['email'];
+    $email = $_POST['email'];
 
     // build the SQL update query
     $sql = "UPDATE students SET name='$name', email='$email' WHERE id=$id";

@@ -1,4 +1,0 @@
-1. Add bootstrap to all pages
-2. fix in index.php the "Edit" button doesnt change the email, 
-    only the name.
-3. 
