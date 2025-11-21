@@ -87,7 +87,9 @@ $result = mysqli_query($conn, $sql);
         <?php
         // loop through all rows returned
         while ($row = mysqli_fetch_assoc($result)) { ?>
-        <tr>
+        <tr style="background-color:<?php if ($row['progress'] < 40) echo 'red';
+                                          elseif ($row['progress'] > 40 && $row['progress'] < 69) echo 'yellow';
+                                          else echo 'green'; ?>">
             <!-- show student id -->
             <td><?php echo $row['id']; ?></td>
 
