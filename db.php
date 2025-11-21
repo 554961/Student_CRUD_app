@@ -7,7 +7,7 @@ $db = "crud_demo";
 
 // attempt to connect to db
 $conn = mysqli_connect($host, $user, $pass, $db);
-if (!$conn) die("Connection Faild: " . mysqli_connect_error());
+if (!$conn) die("Connection Failed: " . mysqli_connect_error());
 
 
 ?>
