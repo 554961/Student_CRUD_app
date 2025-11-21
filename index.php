@@ -15,7 +15,6 @@ if (isset($_POST['add']))
     //run query
     mysqli_query($conn, $sql);
 }
-
 // Get all students from the database to displyay in the table
 $sql = "SELECT * FROM students";
 $result = mysqli_query($conn, $sql);
