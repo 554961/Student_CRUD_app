@@ -9,9 +9,12 @@ if (isset($_POST['add']))
     // get vaulues from form
     $name = $_POST['name'];
     $email = $_POST['email'];
+    $course = $_POST['course'];
+    $progress = $_POST['progress'];
+    $notes = $_POST['notes'];
 
     //build a simple SQL INSERT query 
-    $sql = "INSERT INTO students (name, email) VALUES ('$name', '$email')";
+    $sql = "INSERT INTO students (name, email, course, progress, notes) VALUES ('$name', '$email', '$course', '$progress', '$notes')";
     //run query
     mysqli_query($conn, $sql);
 }
@@ -44,6 +47,21 @@ $result = mysqli_query($conn, $sql);
             <input type="email" name="email" required>
         </div>
         <br><br>
+        <div class="form-control">
+            <label>Course:</label>
+            <input type="text" name="course" required>
+        </div>
+        <br><br>
+        <div class="form-control">
+            <label>Progress:</label>
+            <input type="text" name="progress" required>
+        </div>
+        <br><br>
+        <div class="form-control">
+            <label>Notes:</label>
+            <input type="text" name="notes" required>
+        </div>
+        <br><br>
         <button type="submit" name="add">Add student</button>
     </form>
 
@@ -54,8 +72,13 @@ $result = mysqli_query($conn, $sql);
     <table border="1" cellpadding="8" cellspacing="0">
         <tr>
             <th>ID</th>
+            
             <th>Name</th>
             <th>Email</th>
+            <th>Course</th>
+            <th>Progress</th>
+            <th>Notes</th>
+
             <th>Actions</th> 
         </tr>
 
@@ -69,6 +92,9 @@ $result = mysqli_query($conn, $sql);
             <!-- use htmlspecialchars to avoid html issues -->
              <td><?php echo htmlspecialchars($row['name']); ?></td>
              <td><?php echo htmlspecialchars($row['email']); ?></td>
+             <td><?php echo htmlspecialchars($row['course']); ?></td>
+             <td><?php echo htmlspecialchars($row['progress']); ?></td>
+             <td><?php echo htmlspecialchars($row['notes']); ?></td>
 
              <!-- links pass the student id in the URL e.g. edit.php?id=3 -->
               <td>

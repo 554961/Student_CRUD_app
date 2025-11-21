@@ -3,15 +3,19 @@
 include 'db.php';
 // get the student id from the URL
 $id = $_GET['id'];
+
 // if the update form was submitted
 if (isset($_POST['update']))
 {
     // get new values
     $name = $_POST['name'];
     $email = $_POST['email'];
+    $course = $_POST['course'];
+    $progress = $_POST['progress'];
+    $notes = $_POST['notes'];
 
     // build the SQL update query
-    $sql = "UPDATE students SET name='$name', email='$email' WHERE id=$id";
+    $sql = "UPDATE students SET name='$name', email='$email', course='$course', progress='$progress', notes='$notes' WHERE id=$id";
 
     // run the update query
     mysqli_query($conn, $sql);
@@ -37,8 +41,8 @@ $student = mysqli_fetch_assoc($result); //gets the row as an associative array
 <body>
     <h1>Edit student</h1>
 
-    <!-- the form kis prefilled with the current data from the db -->
-     <form method="POST" action="">
+    <!-- the form is prefilled with the current data from the db -->
+     <form method="pOsT" action="">
         <label >Name</label>
         <input type="text" name="name" value="<?php echo htmlspecialchars($student['name']); ?>" required>
         <br><br>
@@ -46,6 +50,19 @@ $student = mysqli_fetch_assoc($result); //gets the row as an associative array
         <label >Email</label>
         <input type="email" name="email" value="<?php echo htmlspecialchars($student['email']); ?>" required>
         <br><br>
+
+        <label >Course</label>
+        <input type="text" name="course" value="<?php echo htmlspecialchars($student['course']); ?>" required>
+        <br><br>
+
+        <label >Progress</label>
+        <input type="text" name="progress" value="<?php echo htmlspecialchars($student['progress']); ?>" required>
+        <br><br>
+
+        <label >Notes</label>
+        <input type="text" name="notes" value="<?php echo htmlspecialchars($student['notes']); ?>" required>
+        <br><br>
+
         <!-- When this is clicked PHP sees $_POST['update'] -->
          <button type="submit" name="update">Save Changes</button>
      </form>
