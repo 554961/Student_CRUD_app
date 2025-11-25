@@ -2,34 +2,6 @@
 // index.php
 // include the database connection file so we can use $conn
 include 'db.php';
-// 
-// 
-// Login system doesnt work currently.
-// 
-// 
-// $GLOBALS["loginFailed"] = false;
-// //
-// // !!! Make login form to login to admin and change loggedIn to TRUE
-// //
-// if (isset($_POST['login']))
-// {
-//     // get admin login values
-//     $username = $_POST['username'];
-//     $password = $_POST['password'];
-
-//     //query
-//     $sql = "SELECT username, password FROM login WHERE username='$username'";
-
-//     // execute
-//     $loginData = mysqli_query($conn, $sql);
-//     while ($row = mysqli_fetch_assoc($loginData))
-//     {
-//         if ($username == $row['username'] && $row['password'] == $password)
-//         {
-//             $GLOBALS["loginFailed"] = true;            
-//         }
-//     }
-// }
 
 
 
@@ -89,24 +61,6 @@ $result = mysqli_query($conn, $sql);
     <body class="roboto-slab-font">
         <h1 class="text alert-info">Student List </h1>
 
-        <!-- Login First -->
-         <?php// if($GLOBALS["loginFailed"] == false) { ?>
-
-                <!-- LOGIN FORM -->
-                 <!-- <h2>Login Here:</h2>
-                <form action="index.php" method="POST">
-                    <div class="form-group">
-                        <label>Username: </label>
-                        <input type="text" name="username">
-                    </div>
-                    <div class="form-group">
-                        <label>Password: </label>
-                        <input type="password" name="password">
-                    </div>
-                    <button type="submit" name="login">Login</button>
-                </form> -->
-                
-            <?php// } elseif($GLOBALS["loginFailed"] == true) { ?>
 
         <!-- form to add new student-->
         <h2>Add student</h2>
@@ -147,13 +101,11 @@ $result = mysqli_query($conn, $sql);
             <table border="1" cellpadding="8" cellspacing="0" class="table table-bordered table-striped">
                 <tr>
                     <th >ID</th>
-                    
                     <th>Name</th>
                     <th>Email</th>
                     <th>Course</th>
                     <th>Progress</th>
                     <th>Notes</th>
-
                     <th>Actions</th> 
                 </tr>
 
@@ -184,7 +136,5 @@ $result = mysqli_query($conn, $sql);
             
             </table>
         </div>
-        <!-- this php below is for the failed login system -->
-        <?php // } ?>
     </body>
 </html>
