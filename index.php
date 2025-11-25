@@ -1,3 +1,15 @@
+<!-- PROTECTED PAGE -->
+ <?php
+    session_start();
+
+    if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true)
+    {
+        header("Location: login");
+        exit;
+    }
+ ?>
+<!-- PROTECTED PAGE -->
+
 <?php
 // index.php
 // include the database connection file so we can use $conn
