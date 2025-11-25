@@ -73,6 +73,14 @@ $result = mysqli_query($conn, $sql);
     <body class="roboto-slab-font">
         <h1 class="text alert-info">Student List </h1>
 
+        <p>
+            <hr>
+            Logged in as <em style="color:purple; font-size:17px"><?php echo htmlspecialchars($_SESSION['username'] ?? "user"); ?></em>
+            <br>
+            <a href="logout">Logout?</a>
+            <hr>
+        </p>
+
 
         <!-- form to add new student-->
         <h2>Add student</h2>
